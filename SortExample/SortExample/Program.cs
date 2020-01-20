@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +12,27 @@ namespace SortExample
     {
         static void Main(string[] args)
         {
-            var list = new MySortedList<int>() { 8, 9, 2, 30, 81, -4, 847, -1028, 284, 12, -7, -4, 81 };
+            var list = new MySortedList<int>();
 
-            list.BubbleSort();
-
-            foreach (var item in list)
+            Random r = new Random();
+            for (int i = 0; i < 10000; i++)
             {
-                Console.WriteLine(item);
+                list.Add(r.Next(0, 10000000));
             }
+
+            var timer = Stopwatch.StartNew();
+
+            list.MergeSort();
+
+            timer.Stop();
+
+            Console.WriteLine(timer.Elapsed);
+
+            timer.Restart();
+            list.IntArrayQuickSort();
+
+            timer.Stop();
+            Console.WriteLine(timer.Elapsed);
         }
     }
 
